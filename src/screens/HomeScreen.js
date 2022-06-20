@@ -6,6 +6,7 @@ import {addfavorite} from '../redux/data/favoriteReducer'
 
 import {styles} from '../config/styles'
 import MovieComponent from '../components/MovieComponent'
+import MovieModalComponent from '../components/MovieModalComponent'
 
 import { GetPopularMovies } from '../api/api.js'
 
@@ -14,6 +15,10 @@ const HomeScreen = () => {
     const favorites = useSelector((state) => state.favoriteReducer.value)
 
     const [movies, setMovies] = useState([])
+
+    const [moviemodal,setMoviemodal] = useState([])
+
+    const [modalVisible,setModalVisible] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -33,20 +38,21 @@ const HomeScreen = () => {
     },[])
 
     return(
+        <>
         <SafeAreaView style={styles.container}>
-
+        <MovieModalComponent moviemodal={moviemodal} setModalVisible={setModalVisible}  visible={modalVisible}/>
             <FlatList
                 data={movies}
                 renderItem={({item}) => {
                     return(
-                        <MovieComponent name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
+                        <MovieComponent setMoviemodal={setMoviemodal} setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
                     )
                 }
                 }
                 numColumns={2}
                 keyExtractor={(item) => item.id.toString()}
                 />
-        </SafeAreaView>
+        </SafeAreaView></>
     )
 
 }

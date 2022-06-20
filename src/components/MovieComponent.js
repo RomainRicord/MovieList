@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useSelector, useDispatch } from 'react-redux'
 import {addfavorite, removefavorite } from '../redux/data/favoriteReducer'
 
-const MovieComponent = ({name,picture,metascore}) => {
+const MovieComponent = ({name,picture,metascore,setModalVisible,setMoviemodal, synopsis}) => {
 
     const favorites = useSelector((state) => state.favoriteReducer.value)
     
@@ -36,7 +36,11 @@ const MovieComponent = ({name,picture,metascore}) => {
     return(
     <View style={{margin:20,width:150,height:400,display:'flex', justifyContent:'center',alignItems:'center',backgroundColor:'black' }}>
 
-        <Image source={{uri:'https://image.tmdb.org/t/p/w500/'+picture}} style={{width:150,height:200,flex:4,backgroundColor:'white'}}/>
+        <Pressable onPress={() => {
+            setMoviemodal({name:name,picture:picture,metascore:metascore, synopsis:synopsis})
+            setModalVisible(true)
+            console.log("Press ! modal")
+        }} style={{width:150,height:200,flex:4}}><Image source={{uri:'https://image.tmdb.org/t/p/w500/'+picture}} style={{width:150,height:200,flex:4,backgroundColor:'white'}}/></Pressable>
 
         <Pressable style={{position:'absolute', right:10, top:10,backgroundColor:'rgba(0,0,0,0.5)',borderRadius:20,padding:5 }} onPress={() => {
             
@@ -56,7 +60,7 @@ const MovieComponent = ({name,picture,metascore}) => {
             <Icon name={Boolean(checkFavorite()) ? "star" : "star-outline"} size={30} color="yellow" />
         </Pressable>
 
-        <View style={{ width:150,height:100,flex:0.5, justifyContent:'center',alignItems:'center',backgroundColor:'rgb(50,50,50)' }}>
+        <View style={{ width:150,height:150,flex:1, justifyContent:'center',alignItems:'center',backgroundColor:'rgb(50,50,50)' }}>
 
             <Text style={{textAlign:'center',color:'white'}}>{name}</Text>
 
