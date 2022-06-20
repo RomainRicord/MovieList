@@ -4,6 +4,7 @@ import { useState } from 'react';
 import FavoriteScreen from '../screens/FavoriteScreen'
 import HomeScreen from '../screens/HomeScreen'
 import SearchScreen from '../screens/SearchScreen'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const BottomNavigator = ()  => {
 
@@ -25,6 +26,9 @@ const BottomNavigator = ()  => {
             navigationState={{ index, routes }}
             onIndexChange={setIndex}
             renderScene={renderScene}
+            renderIcon={({ route }) => {
+                return(<Icon name={routes[index].title == route.title ? route.unfocusedIcon : route.focusedIcon} size={20} color="white" />)
+            }}
         />
     )
 
