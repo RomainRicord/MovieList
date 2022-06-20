@@ -1,5 +1,5 @@
-import React from 'react'
-import { Pressable, View } from 'react-native'
+import React, { useEffect,useState } from 'react'
+import { SafeAreaView,Pressable, View,FlatList,ScrollView } from 'react-native'
 
 import { useSelector, useDispatch } from 'react-redux'
 import {addfavorite} from '../redux/data/favoriteReducer'
@@ -7,17 +7,46 @@ import {addfavorite} from '../redux/data/favoriteReducer'
 import {styles} from '../config/styles'
 import MovieComponent from '../components/MovieComponent'
 
+import { GetPopularMovies } from '../api/api.js'
+
 const HomeScreen = () => {
 
     const favorites = useSelector((state) => state.favoriteReducer.value)
 
+    const [movies, setMovies] = useState([])
+
     const dispatch = useDispatch()
 
+    const setMoviesList = async () => {
+
+        const movies_ = await GetPopularMovies({page:1})
+        .then(res => {
+            setMovies(res.movies)
+            //console.log("Movies length", res.movies.length)
+        })
+        //console.log("Resultat",movies_)
+        //setMovies(movies_)
+    }
+
+    useEffect(() => {
+        setMoviesList()
+    },[])
+
     return(
-        <View style={styles.container}>
-            <MovieComponent name="The Shawshank Redemption" picture="https://m.media-amazon.com/images/M/MV5BNDE2NTIyMjg2OF5BMl5BanBnXkFtZTYwNDEyMTg3._V1_QL75_UX380_CR0,3,380,562_.jpg" />
-            <Pressable onPress={() => dispatch(addfavorite('test'))} />
-        </View>
+        <SafeAreaView style={styles.container}>
+
+            <FlatList
+                data={movies}
+                renderItem={({item}) => {
+                    return(
+                        <MovieComponent name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
+                    )
+                }
+                }
+                numColumns={2}
+                keyExtractor={(item) => item.id.toString()}
+                />
+        </SafeAreaView>
     )
 
 }
