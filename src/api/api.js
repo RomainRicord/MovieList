@@ -24,3 +24,26 @@ export const GetPopularMovies = async ({page}) => {
 
     return {movies:movies_}
 }
+
+export const SearchMovie = async ({query}) => {
+    console.log("SearchMovie",query)
+
+    let movies_ = []
+
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`
+    await axios.get(url)
+    .then(res => {
+
+        const movies = res.data.results
+
+        movies_ = movies
+    })
+    .catch((error) => {
+        // handle error
+        console.log("Error SearchMovie",error)
+    })
+
+    console.log("Movies search _",movies_.length)
+
+    return {movies:movies_}
+}
