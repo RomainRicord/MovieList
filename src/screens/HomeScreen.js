@@ -40,12 +40,12 @@ const HomeScreen = () => {
     return(
         <>
         <SafeAreaView style={styles.container}>
-        <MovieModalComponent moviemodal={moviemodal} setModalVisible={setModalVisible}  visible={modalVisible}/>
+            <MovieModalComponent setModalVisible={setModalVisible}  visible={modalVisible}/>
             <FlatList
                 data={movies}
                 renderItem={({item}) => {
                     return(
-                        <MovieComponent setMoviemodal={setMoviemodal} setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
+                        <MovieComponent setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
                     )
                 }
                 }

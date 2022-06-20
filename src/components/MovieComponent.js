@@ -4,8 +4,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import { useSelector, useDispatch } from 'react-redux'
 import {addfavorite, removefavorite } from '../redux/data/favoriteReducer'
+import {setmodal} from '../redux/data/modalReducer'
 
-const MovieComponent = ({name,picture,metascore,setModalVisible,setMoviemodal, synopsis}) => {
+const MovieComponent = ({name,picture,metascore,setModalVisible, synopsis}) => {
 
     const favorites = useSelector((state) => state.favoriteReducer.value)
     
@@ -37,7 +38,7 @@ const MovieComponent = ({name,picture,metascore,setModalVisible,setMoviemodal, s
     <View style={{margin:20,width:150,height:400,display:'flex', justifyContent:'center',alignItems:'center',backgroundColor:'black' }}>
 
         <Pressable onPress={() => {
-            setMoviemodal({name:name,picture:picture,metascore:metascore, synopsis:synopsis})
+            dispatch(setmodal({name:name,picture:picture,metascore:metascore, synopsis:synopsis}))
             setModalVisible(true)
             console.log("Press ! modal")
         }} style={{width:150,height:200,flex:4}}><Image source={{uri:'https://image.tmdb.org/t/p/w500/'+picture}} style={{width:150,height:200,flex:4,backgroundColor:'white'}}/></Pressable>
@@ -50,7 +51,7 @@ const MovieComponent = ({name,picture,metascore,setModalVisible,setMoviemodal, s
                 dispatch(removefavorite(name))
             } else {
                 //console.log("Lets go add")
-                dispatch(addfavorite({name,picture,metascore}))
+                dispatch(addfavorite({name,picture,metascore,synopsis}))
             }
 
             console.log("favorite",favorites)

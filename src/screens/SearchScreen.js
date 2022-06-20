@@ -6,19 +6,23 @@ import { Searchbar } from 'react-native-paper';
 import { SearchMovie } from '../api/api.js'
 
 import MovieComponent from '../components/MovieComponent';
+import MovieModalComponent from '../components/MovieModalComponent'
 
+import { useSelector, useDispatch } from 'react-redux'
 
 const SearchScreen = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [movies, setMovies] = useState([]);
 
+    const [modalVisible,setModalVisible] = useState(false)
+
     const setMoviesList = async () => {
 
         const movies_ = await SearchMovie({query:searchQuery})
         .then(res => {
             setMovies(res.movies)
-            console.log("Movies length", res.movies.length)
+            //console.log("Movies length", res.movies.length)
         })
         //console.log("Resultat",movies_)
         //setMovies(movies_)
@@ -26,6 +30,8 @@ const SearchScreen = () => {
 
     return(
         <View style={styles.container}>
+
+            <MovieModalComponent setModalVisible={setModalVisible}  visible={modalVisible}/>
             
                 <Searchbar
                     placeholder="Search"
@@ -40,7 +46,7 @@ const SearchScreen = () => {
                     data={movies}
                     renderItem={({item}) => {
                         return(
-                            <MovieComponent name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
+                            <MovieComponent setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
                         )
                     }
                     }
