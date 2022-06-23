@@ -18,7 +18,7 @@ const FavoriteScreen = () => {
                 data={favorites}
                 renderItem={({item,index}) => {
                     return(
-                        <MovieComponent setModalVisible={setModalVisible} synopsis={item.synopsis} key={index} name={item.title} picture={item.img} metascore={item.metascore}/>
+                        <MovieComponent setModalVisible={setModalVisible} synopsis={item.synopsis} key={index} name={item.title} picture={item.img} vote_average={item.vote_average}/>
                     )
                 }}
                 numColumns={2}

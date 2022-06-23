@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {addfavorite, removefavorite } from '../redux/data/favoriteReducer'
 import {setmodal} from '../redux/data/modalReducer'
 
-const MovieComponent = ({name,picture,metascore,setModalVisible, synopsis}) => {
+const MovieComponent = ({name,picture,vote_average,setModalVisible, synopsis}) => {
 
     const favorites = useSelector((state) => state.favoriteReducer.value)
     
@@ -38,7 +38,7 @@ const MovieComponent = ({name,picture,metascore,setModalVisible, synopsis}) => {
     <View style={{margin:20,width:150,height:400,display:'flex', justifyContent:'center',alignItems:'center',backgroundColor:'black' }}>
 
         <Pressable onPress={() => {
-            dispatch(setmodal({name:name,picture:picture,metascore:metascore, synopsis:synopsis}))
+            dispatch(setmodal({name:name,picture:picture,vote_average:vote_average, synopsis:synopsis}))
             setModalVisible(true)
             console.log("Press ! modal")
         }} style={{width:150,height:200,flex:4}}><Image source={{uri:'https://image.tmdb.org/t/p/w500/'+picture}} style={{width:150,height:200,flex:4,backgroundColor:'white'}}/></Pressable>
@@ -51,7 +51,7 @@ const MovieComponent = ({name,picture,metascore,setModalVisible, synopsis}) => {
                 dispatch(removefavorite(name))
             } else {
                 //console.log("Lets go add")
-                dispatch(addfavorite({name,picture,metascore,synopsis}))
+                dispatch(addfavorite({name,picture,vote_average,synopsis}))
             }
 
             console.log("favorite",favorites)
@@ -69,7 +69,7 @@ const MovieComponent = ({name,picture,metascore,setModalVisible, synopsis}) => {
 
         <View style={{ width:150,height:100,flex:0.5, justifyContent:'center',alignItems:'center',backgroundColor:'rgb(20,20,20)' }}>
 
-            <Text style={{textAlign:'center',color:'white'}}>{metascore} Metascore</Text>
+            <Text style={{textAlign:'center',color:'white'}}>{(vote_average).toFixed()}/10</Text>
 
         </View>
         

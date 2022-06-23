@@ -45,7 +45,7 @@ const HomeScreen = () => {
                 data={movies}
                 renderItem={({item}) => {
                     return(
-                        <MovieComponent setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} metascore={item.vote_average}/>
+                        <MovieComponent setModalVisible={setModalVisible} synopsis={item.overview} name={item.title} picture={item.poster_path} vote_average={item.vote_average}/>
                     )
                 }
                 }

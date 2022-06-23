@@ -7,11 +7,13 @@ export const GetPopularMovies = async ({page}) => {
 
     let movies_ = []
 
-    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=fr-FR&page=${page}`
+    const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=fr-FR&page=${page}`
     await axios.get(url)
     .then(res => {
 
         const movies = res.data.results
+
+        console.log("Films info",movies)
 
         movies_ = movies
     })
